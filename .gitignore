@@ -1,35 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@poppintk 
-zsy0216
-/
-guli-mall
-3
-30
-41
-Code
-Issues
-2
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-guli-mall/.gitignore
-@zsy0216
-zsy0216 feat: 人人开源作为后台前后端
-Latest commit ade0243 on 6 Mar
- History
- 1 contributor
-35 lines (31 sloc)  415 Bytes
-  
 HELP.md
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -65,16 +33,3 @@ build/
 
 ### VS Code ###
 .vscode/
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Loading complete
