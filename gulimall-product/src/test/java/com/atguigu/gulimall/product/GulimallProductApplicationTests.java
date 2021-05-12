@@ -1,9 +1,10 @@
 package com.atguigu.gulimall.product;
 
+import com.atguigu.gulimall.product.entity.BrandEntity;
+import com.atguigu.gulimall.product.service.BrandService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.atguigu.gulimall.product.service.CommentReplayService;
 import com.atguigu.gulimall.product.entity.CommentReplayEntity;
 
 import java.util.List;
@@ -11,11 +12,14 @@ import java.util.List;
 @SpringBootTest
 class GulimallProductApplicationTests {
     @Autowired
-    CommentReplayService commentReplayService;
+    BrandService brandService;
+
     @Test
     void contextLoads() {
-        List<CommentReplayEntity> list = commentReplayService.list();
-        System.out.println(list);
+        BrandEntity brandEntity = new BrandEntity();
+        brandEntity.setDescript("");
+        brandEntity.setName("hua wei ");
+        brandService.save(brandEntity);
     }
 
 }

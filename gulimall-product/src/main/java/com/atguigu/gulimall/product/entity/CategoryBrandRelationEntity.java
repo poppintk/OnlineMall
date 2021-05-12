@@ -8,15 +8,15 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 
+ * 品牌分类关联
  * 
  * @author ryan
  * @email ryan.youdong@gmail.com
- * @date 2021-05-11 19:13:37
+ * @date 2021-05-12 00:48:47
  */
 @Data
-@TableName("undo_log")
-public class UndoLogEntity implements Serializable {
+@TableName("pms_category_brand_relation")
+public class CategoryBrandRelationEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -25,36 +25,20 @@ public class UndoLogEntity implements Serializable {
 	@TableId
 	private Long id;
 	/**
-	 * 
+	 * 品牌id
 	 */
-	private Long branchId;
+	private Long brandId;
+	/**
+	 * 分类id
+	 */
+	private Long catelogId;
 	/**
 	 * 
 	 */
-	private String xid;
+	private String brandName;
 	/**
 	 * 
 	 */
-	private String context;
-	/**
-	 * 
-	 */
-	private Longblob rollbackInfo;
-	/**
-	 * 
-	 */
-	private Integer logStatus;
-	/**
-	 * 
-	 */
-	private Date logCreated;
-	/**
-	 * 
-	 */
-	private Date logModified;
-	/**
-	 * 
-	 */
-	private String ext;
+	private String catelogName;
 
 }

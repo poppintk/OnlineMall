@@ -18,12 +18,13 @@ public class SkuImagesServiceImpl extends ServiceImpl<SkuImagesDao, SkuImagesEnt
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<SkuImagesEntity> page = this.page(
-                new Query<SkuImagesEntity>().getPage(params),
-                new QueryWrapper<SkuImagesEntity>()
-        );
-
-        return new PageUtils(page);
+//        IPage<SkuImagesEntity> page = this.page(
+//                new Query<SkuImagesEntity>().getPage(params),
+//                new QueryWrapper<SkuImagesEntity>()
+//        );
+//
+//        return new PageUtils(page);
+        return null;
     }
 
 }

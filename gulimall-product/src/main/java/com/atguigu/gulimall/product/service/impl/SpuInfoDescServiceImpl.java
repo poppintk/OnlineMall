@@ -18,12 +18,13 @@ public class SpuInfoDescServiceImpl extends ServiceImpl<SpuInfoDescDao, SpuInfoD
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        IPage<SpuInfoDescEntity> page = this.page(
-                new Query<SpuInfoDescEntity>().getPage(params),
-                new QueryWrapper<SpuInfoDescEntity>()
-        );
-
-        return new PageUtils(page);
+//        IPage<SpuInfoDescEntity> page = this.page(
+//                new Query<SpuInfoDescEntity>().getPage(params),
+//                new QueryWrapper<SpuInfoDescEntity>()
+//        );
+//
+//        return new PageUtils(page);
+        return null;
     }
 
 }
