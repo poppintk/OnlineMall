@@ -31,7 +31,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  *      Data ID :配置文件名
  *
  *  4) 配置分組：
- *      默認所有的配置集都屬於DEFAULT_GROUP：
+ *      默認所有的配置集都屬於DEFAULT_GROU P：
  *      1111. 618, 1212
  *      spring.cloud.nacos.config.group=1111
  *
