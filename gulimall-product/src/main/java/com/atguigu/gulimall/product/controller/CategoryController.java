@@ -82,4 +82,11 @@ public class CategoryController {
         return R.ok();
     }
 
+    @RequestMapping("/update/sort")
+    //@RequiresPermissions("product:category:delete")
+    public R delete(@RequestBody CategoryEntity[] categoryEntities){
+        categoryService.updateBatchById(Arrays.asList(categoryEntities));
+
+        return R.ok();
+    }
 }
