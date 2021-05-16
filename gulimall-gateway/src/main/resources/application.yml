@@ -11,6 +11,12 @@ spring:
           predicates:
             - Query=url,qq
 
+        - id: product_route
+          uri: lb://gulimall-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
 
         - id: admin_route
           uri: lb://renren-fast
@@ -30,3 +36,9 @@ spring:
             allowCredentials: true
 
         ## http://localhost:88/api/captcha.jpg => http://localhost:8080/renren-fast/captcha.jpg
+
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+server:
+  port: 88
