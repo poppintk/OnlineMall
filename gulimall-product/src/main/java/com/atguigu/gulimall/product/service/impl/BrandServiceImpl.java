@@ -1,15 +1,17 @@
 package com.atguigu.gulimall.product.service.impl;
 
 import com.atguigu.common.utils.PageUtils;
+import com.atguigu.common.utils.Query;
 import com.atguigu.gulimall.product.dao.BrandDao;
 import com.atguigu.gulimall.product.entity.BrandEntity;
 import com.atguigu.gulimall.product.service.BrandService;
 import com.atguigu.gulimall.product.service.CategoryBrandRelationService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
@@ -23,16 +25,16 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//		QueryWrapper<BrandEntity> wrapper = new QueryWrapper<>();
-//		String key = (String) params.get("key");
-//		if(!StringUtils.isEmpty(key)){
-//			wrapper.eq("brand_id", key).or().like("name", key);
-//		}
-//		IPage<BrandEntity> page = this.page(
-//                new Query<BrandEntity>().getPage(params),
-//				wrapper
-//        );
-        return null;
+		String key = (String)params.get("key");
+		QueryWrapper<BrandEntity> queryWrapper = new QueryWrapper<>();
+		if(StringUtils.isNotEmpty(key)){
+			queryWrapper.eq("brand_id",key).or().like("name",key);
+		}
+		IPage<BrandEntity> page = this.page(
+				new Query<BrandEntity>().getPage(params),queryWrapper
+
+		);
+		return new PageUtils(page);
     }
 
 	/**
@@ -41,7 +43,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
 	@Transactional
 	@Override
 	public void updateDetail(BrandEntity brand) {
-		// 保证冗余字段的数据一致
+		baseMapper.updateById(brand);
 
 	}
 

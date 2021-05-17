@@ -45,12 +45,7 @@
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.1</version>
-            <scope>test</scope>
-        </dependency>
+
         <!--        服務發現-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -61,6 +56,7 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -73,4 +69,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
 </project>
