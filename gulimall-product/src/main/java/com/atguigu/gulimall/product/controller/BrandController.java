@@ -8,6 +8,7 @@ import com.atguigu.gulimall.product.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -58,9 +59,9 @@ public class BrandController {
 	 * POSTman :{"name":"aaa","logo":"https://github.com/1046762075","sort":0,"firstLetter":"d","showStatus":0}
 	 */
 	@RequestMapping("/save")
-	public R save(@RequestBody BrandEntity brand) {
-		brandService.save(brand);
+	public R save(@Valid @RequestBody BrandEntity brand) {
 
+		brandService.save(brand);
 		return R.ok();
 	}
 
