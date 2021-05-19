@@ -9,8 +9,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -103,6 +106,35 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 //		return null;
     }
 
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> parentPaths = new ArrayList<>();
+
+        this.findParentPath(catelogId, parentPaths);
+
+        Collections.reverse(parentPaths);
+        return (Long[]) parentPaths.toArray(new Long[parentPaths.size()]);
+    }
+
+    /**
+     * 级联更新所有关联的数据
+     * @param category
+     */
+    @Transactional
+    @Override
+    public void updateCascade(CategoryEntity category) {
+        this.updateById(category);
+        categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+    }
+
+    private void findParentPath(Long catelogId, List<Long> paths) {
+        paths.add(catelogId);
+        CategoryEntity byId = this.getById(catelogId);
+        if (byId.getParentCid() != 0) {
+            this.findParentPath(byId.getParentCid(), paths);
+        }
+    }
+
     /**
      * 第一次查询的所有 CategoryEntity 然后根据 parent_cid去这里找
      */
@@ -111,16 +143,4 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return entityList.stream().filter(item -> item.getParentCid() == parent_cid).collect(Collectors.toList());
     }
 
-    /**
-     * 递归收集所有节点
-     */
-    private List<Long> findParentPath(Long catlogId, List<Long> paths) {
-        // 1、收集当前节点id
-        paths.add(catlogId);
-        CategoryEntity byId = this.getById(catlogId);
-        if (byId.getParentCid() != 0) {
-            findParentPath(byId.getParentCid(), paths);
-        }
-        return paths;
-    }
 }

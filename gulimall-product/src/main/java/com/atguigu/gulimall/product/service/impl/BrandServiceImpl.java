@@ -19,7 +19,6 @@ import java.util.Map;
 
 @Service("brandService")
 public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> implements BrandService {
-
 	@Resource
 	private CategoryBrandRelationService categoryBrandRelationService;
 
@@ -43,7 +42,16 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
 	@Transactional
 	@Override
 	public void updateDetail(BrandEntity brand) {
-		baseMapper.updateById(brand);
+		// 保证冗余字段的数据一致
+		this.updateById(brand);
+
+
+		if (!StringUtils.isEmpty(brand.getName())) {
+			// 同步更新其他关联表中的数据
+			categoryBrandRelationService.updateBrand(brand.getBrandId(), brand.getName());
+
+			//TODO 更新其他关联
+		}
 
 	}
 
