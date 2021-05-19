@@ -18,13 +18,12 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<ProductAttrValueEntity> page = this.page(
-//                new Query<ProductAttrValueEntity>().getPage(params),
-//                new QueryWrapper<ProductAttrValueEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<ProductAttrValueEntity> page = this.page(
+                new Query<ProductAttrValueEntity>().getPage(params),
+                new QueryWrapper<ProductAttrValueEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }
