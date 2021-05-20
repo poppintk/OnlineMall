@@ -2,7 +2,6 @@ package com.atguigu.gulimall.product.controller;
 
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
-import com.atguigu.gulimall.product.entity.AttrEntity;
 import com.atguigu.gulimall.product.service.AttrService;
 import com.atguigu.gulimall.product.vo.AttrRespVo;
 import com.atguigu.gulimall.product.vo.AttrVo;
@@ -33,16 +32,18 @@ public class AttrController {
     @RequestMapping("/list")
     //@RequiresPermissions("product:attr:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = attrService.queryBaseAttrPage(params);
+        PageUtils page = attrService.queryPage(params);
 
         return R.ok().put("page", page);
     }
 
 
-    @GetMapping("/base/list/{catelogId}")
+    @GetMapping("/{attrType}/list/{catelogId}")
     //@RequiresPermissions("product:attr:info")
-    public R baseLogId(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId){
-        PageUtils page = attrService.queryBaseAttrPage(params, catelogId);
+    public R baseLogId(@RequestParam Map<String, Object> params,
+                       @PathVariable("catelogId") Long catelogId,
+                       @PathVariable("attrType") String attrType){
+        PageUtils page = attrService.queryBaseAttrPage(params, catelogId, attrType);
 
         return R.ok().put("page", page);
     }
