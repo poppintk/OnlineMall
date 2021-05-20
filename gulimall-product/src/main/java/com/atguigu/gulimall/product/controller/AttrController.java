@@ -3,6 +3,7 @@ package com.atguigu.gulimall.product.controller;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.product.service.AttrService;
+import com.atguigu.gulimall.product.vo.AttrGroupRelationVo;
 import com.atguigu.gulimall.product.vo.AttrRespVo;
 import com.atguigu.gulimall.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class AttrController {
     @Autowired
     private AttrService attrService;
+
 
     /**
      * 列表
@@ -70,6 +72,8 @@ public class AttrController {
 
         return R.ok();
     }
+
+
 
     /**
      * 修改
