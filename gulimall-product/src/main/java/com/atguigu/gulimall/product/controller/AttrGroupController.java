@@ -72,7 +72,7 @@ public class AttrGroupController {
     /**
      * 列表
      */
-    @RequestMapping("/list/{catelogId}")
+    @GetMapping("/list/{catelogId}")
     //@RequiresPermissions("product:attrgroup:list")
     public R list(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId){
         //PageUtils page = attrGroupService.queryPage(params);
