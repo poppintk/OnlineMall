@@ -18,13 +18,12 @@ public class MemberCollectSubjectServiceImpl extends ServiceImpl<MemberCollectSu
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<MemberCollectSubjectEntity> page = this.page(
-//                new Query<MemberCollectSubjectEntity>().getPage(params),
-//                new QueryWrapper<MemberCollectSubjectEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<MemberCollectSubjectEntity> page = this.page(
+                new Query<MemberCollectSubjectEntity>().getPage(params),
+                new QueryWrapper<MemberCollectSubjectEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }

@@ -18,13 +18,12 @@ public class IntegrationChangeHistoryServiceImpl extends ServiceImpl<Integration
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<IntegrationChangeHistoryEntity> page = this.page(
-//                new Query<IntegrationChangeHistoryEntity>().getPage(params),
-//                new QueryWrapper<IntegrationChangeHistoryEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<IntegrationChangeHistoryEntity> page = this.page(
+                new Query<IntegrationChangeHistoryEntity>().getPage(params),
+                new QueryWrapper<IntegrationChangeHistoryEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }

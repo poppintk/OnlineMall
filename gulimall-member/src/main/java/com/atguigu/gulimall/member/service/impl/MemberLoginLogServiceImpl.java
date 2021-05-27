@@ -18,13 +18,12 @@ public class MemberLoginLogServiceImpl extends ServiceImpl<MemberLoginLogDao, Me
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<MemberLoginLogEntity> page = this.page(
-//                new Query<MemberLoginLogEntity>().getPage(params),
-//                new QueryWrapper<MemberLoginLogEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<MemberLoginLogEntity> page = this.page(
+                new Query<MemberLoginLogEntity>().getPage(params),
+                new QueryWrapper<MemberLoginLogEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }

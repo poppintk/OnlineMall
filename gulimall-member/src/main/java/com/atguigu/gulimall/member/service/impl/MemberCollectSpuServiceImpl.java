@@ -18,13 +18,12 @@ public class MemberCollectSpuServiceImpl extends ServiceImpl<MemberCollectSpuDao
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<MemberCollectSpuEntity> page = this.page(
-//                new Query<MemberCollectSpuEntity>().getPage(params),
-//                new QueryWrapper<MemberCollectSpuEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<MemberCollectSpuEntity> page = this.page(
+                new Query<MemberCollectSpuEntity>().getPage(params),
+                new QueryWrapper<MemberCollectSpuEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }

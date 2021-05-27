@@ -18,13 +18,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<MemberEntity> page = this.page(
-//                new Query<MemberEntity>().getPage(params),
-//                new QueryWrapper<MemberEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<MemberEntity> page = this.page(
+                new Query<MemberEntity>().getPage(params),
+                new QueryWrapper<MemberEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }
