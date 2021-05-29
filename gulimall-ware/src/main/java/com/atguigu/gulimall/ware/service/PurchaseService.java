@@ -2,18 +2,18 @@ package com.atguigu.gulimall.ware.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.atguigu.common.utils.PageUtils;
-import com.atguigu.gulimall.ware.entity.WareOrderTaskEntity;
+import com.atguigu.gulimall.ware.entity.PurchaseEntity;
 
 import java.util.Map;
 
 /**
- * 库存工作单
+ * 采购信息
  *
  * @author ryan
  * @email ryan.youdong@gmail.com
  * @date 2021-05-29 14:03:27
  */
-public interface WareOrderTaskService extends IService<WareOrderTaskEntity> {
+public interface PurchaseService extends IService<PurchaseEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 }

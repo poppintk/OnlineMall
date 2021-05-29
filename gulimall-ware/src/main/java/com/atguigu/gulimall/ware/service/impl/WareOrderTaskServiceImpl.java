@@ -18,13 +18,12 @@ public class WareOrderTaskServiceImpl extends ServiceImpl<WareOrderTaskDao, Ware
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<WareOrderTaskEntity> page = this.page(
-//                new Query<WareOrderTaskEntity>().getPage(params),
-//                new QueryWrapper<WareOrderTaskEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<WareOrderTaskEntity> page = this.page(
+                new Query<WareOrderTaskEntity>().getPage(params),
+                new QueryWrapper<WareOrderTaskEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }

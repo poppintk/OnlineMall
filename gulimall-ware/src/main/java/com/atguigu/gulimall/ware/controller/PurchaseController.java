@@ -10,33 +10,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.atguigu.gulimall.ware.entity.WareOrderTaskEntity;
-import com.atguigu.gulimall.ware.service.WareOrderTaskService;
+import com.atguigu.gulimall.ware.entity.PurchaseEntity;
+import com.atguigu.gulimall.ware.service.PurchaseService;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
 
 
 
 /**
- * 库存工作单
+ * 采购信息
  *
  * @author ryan
  * @email ryan.youdong@gmail.com
  * @date 2021-05-29 14:03:27
  */
 @RestController
-@RequestMapping("ware/wareordertask")
-public class WareOrderTaskController {
+@RequestMapping("ware/purchase")
+public class PurchaseController {
     @Autowired
-    private WareOrderTaskService wareOrderTaskService;
+    private PurchaseService purchaseService;
 
     /**
      * 列表
      */
     @RequestMapping("/list")
-    //@RequiresPermissions("ware:wareordertask:list")
+    //@RequiresPermissions("ware:purchase:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = wareOrderTaskService.queryPage(params);
+        PageUtils page = purchaseService.queryPage(params);
 
         return R.ok().put("page", page);
     }
@@ -46,20 +46,20 @@ public class WareOrderTaskController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    //@RequiresPermissions("ware:wareordertask:info")
+    //@RequiresPermissions("ware:purchase:info")
     public R info(@PathVariable("id") Long id){
-		WareOrderTaskEntity wareOrderTask = wareOrderTaskService.getById(id);
+		PurchaseEntity purchase = purchaseService.getById(id);
 
-        return R.ok().put("wareOrderTask", wareOrderTask);
+        return R.ok().put("purchase", purchase);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    //@RequiresPermissions("ware:wareordertask:save")
-    public R save(@RequestBody WareOrderTaskEntity wareOrderTask){
-		wareOrderTaskService.save(wareOrderTask);
+    //@RequiresPermissions("ware:purchase:save")
+    public R save(@RequestBody PurchaseEntity purchase){
+		purchaseService.save(purchase);
 
         return R.ok();
     }
@@ -68,9 +68,9 @@ public class WareOrderTaskController {
      * 修改
      */
     @RequestMapping("/update")
-    //@RequiresPermissions("ware:wareordertask:update")
-    public R update(@RequestBody WareOrderTaskEntity wareOrderTask){
-		wareOrderTaskService.updateById(wareOrderTask);
+    //@RequiresPermissions("ware:purchase:update")
+    public R update(@RequestBody PurchaseEntity purchase){
+		purchaseService.updateById(purchase);
 
         return R.ok();
     }
@@ -79,9 +79,9 @@ public class WareOrderTaskController {
      * 删除
      */
     @RequestMapping("/delete")
-    //@RequiresPermissions("ware:wareordertask:delete")
+    //@RequiresPermissions("ware:purchase:delete")
     public R delete(@RequestBody Long[] ids){
-		wareOrderTaskService.removeByIds(Arrays.asList(ids));
+		purchaseService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }
