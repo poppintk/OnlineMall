@@ -1,5 +1,6 @@
 package com.atguigu.gulimall.product.service.impl;
 
+import com.alibaba.fastjson.TypeReference;
 import com.atguigu.common.constant.ProductConstant;
 import com.atguigu.common.to.SkuHasStockTo;
 import com.atguigu.common.to.SkuReductionTo;
@@ -251,7 +252,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         List<Long> searchAttrIds = attrService.selectSearchAttrIds(attrIds);
 
 
-        Set<Long> idSet = new HashSet<>();
+        Set<Long> idSet = new HashSet<>(searchAttrIds);
         List<SkuEsModel.Attrs> attrsList = baseAttrs.stream().filter(item -> {
             return idSet.contains(item.getAttrId());
         }).map(item -> {
@@ -264,8 +265,9 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         // TODO 发送远程调用，库存系统查询是否有库存
         Map<Long, Boolean> stockMap = null;
         try {
-            R<List<SkuHasStockTo>> hasStock = wareFeignService.getSkusHasStock(skuIdList);
-            stockMap = hasStock.getData().stream().collect(Collectors.toMap(SkuHasStockTo::getSkuId, item -> item.getHasStock()));
+            R r = wareFeignService.getSkusHasStock(skuIdList);
+            TypeReference<List<SkuHasStockTo>> typeReference = new TypeReference<List<SkuHasStockTo>>() {};
+            stockMap = r.getData(typeReference).stream().collect(Collectors.toMap(SkuHasStockTo::getSkuId, item -> item.getHasStock()));
         } catch (Exception e) {
             log.error("库存服务查询异常：{}", e);
         }
@@ -314,6 +316,22 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         } else {
             //远程调用失败
             // TODO 重复调用的问题， 接口幂等性， 重试机制
+            /**
+             * 1. 构造请求数据，将对象转化成json
+             *      RequestTemplate template = buildTemplateFromArgs.create(argv)
+             * 2. 发送请求进行执行(执行成功会解码响应数据):
+             *      executeAndDecode(template)
+             * 3。 执行请求会有 重试机制， 默认是关闭状态
+             *      while (true) {
+             *          try{
+             *              executeAndDecode(template);
+             *          } catch() {
+             *              try{ retryer.continueOrPropagate(e);} catch() {throw ex;}
+             *              continue;
+             *          }
+             *      }
+             */
+
         }
     }
 

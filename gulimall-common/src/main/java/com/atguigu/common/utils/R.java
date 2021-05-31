@@ -1,5 +1,8 @@
 package com.atguigu.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,21 +13,25 @@ import java.util.Map;
  * @email sunlightcs@gmail.com
  * @date 2016年10月27日 下午9:59:27
  */
-public class R<T> extends HashMap<String, Object> {
+public class R extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
-
-	private T data;
-
-	public T getData() {
-		return data;
-	}
-
-	public void setData(T data) {
-		this.data = data;
-	}
 
 	public R() {
 		put("code", 0);
+	}
+
+
+	//利用阿里提供的fastjson进行逆转
+	public <T> T getData(TypeReference<T> typeReference) {
+		Object data = get("data"); //默认是map的类型
+		String s = JSON.toJSONString(data);
+		T t = JSON.parseObject(s, typeReference);
+		return t;
+	}
+
+	public R setData(Object data) {
+		put("data", data);
+		return this;
 	}
 	
 	public static R error() {
