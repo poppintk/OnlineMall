@@ -10,9 +10,19 @@ import java.util.Map;
  * @email sunlightcs@gmail.com
  * @date 2016年10月27日 下午9:59:27
  */
-public class R extends HashMap<String, Object> {
+public class R<T> extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
-	
+
+	private T data;
+
+	public T getData() {
+		return data;
+	}
+
+	public void setData(T data) {
+		this.data = data;
+	}
+
 	public R() {
 		put("code", 0);
 	}
