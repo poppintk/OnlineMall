@@ -46,6 +46,12 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*), /renren-fast/$\{segment}
 
+        - id: gulimall_host_route
+          uri: lb://gulimall-product
+          predicates:
+            - Host=192.168.56.10s
+
+
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
       globalcors:
