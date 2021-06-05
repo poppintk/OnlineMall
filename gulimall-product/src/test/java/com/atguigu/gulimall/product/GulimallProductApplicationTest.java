@@ -3,6 +3,8 @@ package com.atguigu.gulimall.product;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -17,6 +19,17 @@ public class GulimallProductApplicationTest extends TestCase {
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    RedissonClient redissonClient;
+
+    @Test
+    public void testRedissonClient() {
+
+
+
+    }
+
 
     @Test
     public void testStringRedisTemplate() {
