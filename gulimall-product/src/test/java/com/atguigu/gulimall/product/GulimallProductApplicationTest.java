@@ -3,7 +3,6 @@ package com.atguigu.gulimall.product;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +25,7 @@ public class GulimallProductApplicationTest extends TestCase {
     @Test
     public void testRedissonClient() {
 
-
+        System.out.println(redissonClient);
 
     }
 

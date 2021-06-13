@@ -177,7 +177,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         // 占分布式锁， 去redis 占坑
         // 设置过期时间,必须和加锁是同步的, 加ttl的原因是防止 中间服务器异常退出，导致死锁
         // 缺点：业务超市情况，如果当前的thread 执行30秒后，就会释放锁，那么后面的thread 就会进来。
-        String uuid = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString(); //用uuid的原因防止误删别人的锁
         // 加锁原子性
         Boolean lock = stringRedisTemplate.opsForValue().setIfAbsent("lock", uuid, 300, TimeUnit.SECONDS);
         if (lock) {
@@ -187,12 +187,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             try {
                 dataFromDb = getDataFromDb();
             } finally {
+                // 获取值对比 + 对比成功删除=原子操作 lua脚本解锁
                 String luaScript = "if redis.call(\"get\", KEYS[1]) == ARGV[1] then return redis.call(\"del\", KEYS[1]) else return 0 end";
                 // 原子删除锁，还需要考虑锁的自动续期(如果不想做续期，把锁的时间放长一点也可以)
                 Long lock1 = stringRedisTemplate.execute(new DefaultRedisScript<Long>(luaScript, Long.class), Arrays.asList("lock"), uuid);
             }
 
-            // 获取值对比 + 对比成功删除=原子操作 lua脚本解锁
+
 //            String lockValue = stringRedisTemplate.opsForValue().get("lock");
 //            if (uuid.equals(lockValue)) {
 //                //删除我自己的锁
@@ -212,7 +213,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     private Map<String, List<Catelog2Vo>> getDataFromDb() {
-        //得到锁后，应该去再去缓存中确定一次，如果没有才需要继续查询
+        //得到锁后，应该去再去缓存中确定一次，如果没有才需要继续查询 (类似singleton 的double checking的作法)
         String catalogJSON = stringRedisTemplate.opsForValue().get(CATALOG_JSON);
         if (!StringUtils.isEmpty(catalogJSON)) {
             //缓存部位null直接返回
