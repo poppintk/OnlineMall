@@ -13,6 +13,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang.StringUtils;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -34,6 +36,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    RedissonClient redisson;
 
     private final String CATALOG_JSON = "catalogJSON";
 
@@ -110,6 +115,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
      *  sync = true: --- 开启同步锁
      *
      */
+    // 代表当前方法的结果需要缓存，如果缓存中有，方法不用调用。如果缓存中没有， 会调用方法，最后将方法的结果返回
     @Cacheable(value = {"category"}, key = "#root.method.name", sync = true)
     @Override
     public List<CategoryEntity> getLevel1Categorys() {
@@ -165,7 +171,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         String catalogJSON = ops.get(CATALOG_JSON);
         if (StringUtils.isEmpty(catalogJSON)) {
             System.out.println("缓存不命中。。。将要查询数据库。。。");
-            return getCatalogJsonWithReidsLock();
+            return getCatalogJsonWithRedissonLock();
         }
 
         System.out.println("缓存命中。。。直接返回。。。");
@@ -173,7 +179,30 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return result;
     }
 
-    public Map<String, List<Catelog2Vo>> getCatalogJsonWithReidsLock() {
+    /**
+     * 缓存里面的数据如何和数据库保持一致
+     * 缓存数据一致性
+     * 1） 双写模式： 高并发会产生 脏数据问题
+     * 2） 失效模式
+     * @return
+     */
+    private Map<String, List<Catelog2Vo>> getCatalogJsonWithRedissonLock() {
+        // 占分布式锁， 去redis 占坑
+        RLock lock = redisson.getLock("catalogJson-lock");
+        lock.lock();
+
+        System.out.println("获取分布式成功...");
+        Map<String, List<Catelog2Vo>> dataFromDb = null;
+        // 加锁成功，执行业务
+        try {
+            dataFromDb = getDataFromDb();
+        } finally {
+            lock.unlock();
+        }
+        return dataFromDb;
+    }
+
+    private Map<String, List<Catelog2Vo>> getCatalogJsonWithRedisLock() {
         // 占分布式锁， 去redis 占坑
         // 设置过期时间,必须和加锁是同步的, 加ttl的原因是防止 中间服务器异常退出，导致死锁
         // 缺点：业务超市情况，如果当前的thread 执行30秒后，就会释放锁，那么后面的thread 就会进来。
@@ -208,7 +237,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             } catch (InterruptedException e) {
                 log.error("{}", e);
             }
-            return getCatalogJsonWithReidsLock();
+            return getCatalogJsonWithRedisLock();
         }
     }
 
