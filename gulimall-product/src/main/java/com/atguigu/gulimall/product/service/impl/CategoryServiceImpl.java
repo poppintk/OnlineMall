@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -112,6 +113,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
      *  	2.指定缓存数据存活时间	[配置文件中修改]
      *  	3.将数据保存为json格式
      *
+     * @Cacheable: 触发将数据保存到缓存的操作
+     * @CacheEvict: 触发将数据从缓存删除的操作 （失效模式）
+     * @CachePut: 不影响方法执行更新 （双写模式）
+     * @Caching: 组合以上多个操作
+     * @CacheConfig: 在类级别共享缓存的相关配置
+     *
      *  sync = true: --- 开启同步锁
      *
      */
@@ -134,8 +141,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     /**
      * 级联更新所有关联的数据
+     * @CacheEvict 缓存失效模式
      * @param category
      */
+
+    @CacheEvict(value = "category", allEntries = true)
     @Transactional
     @Override
     public void updateCascade(CategoryEntity category) {
@@ -157,8 +167,49 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
      *      Lettuce, jedis 操作 redis的底层客户端。 spring 挨次封装redisTemplate
      * @return
      */
+    @Cacheable(value = "category", key="#root.method.name")
     @Override
     public Map<String, List<Catelog2Vo>> getCatalogJson() {
+        System.out.println("查询数据库。。。。");
+        // 将数据库的多次查询变成为一次
+        List<CategoryEntity> selectList = baseMapper.selectList(null);
+
+        //查出说有一级分类
+        List<CategoryEntity> level1Categorys = getParentCid(selectList, 0L);
+
+        //封装数据
+        Map<String, List<Catelog2Vo>> parent_cid = level1Categorys
+                .stream()
+                .collect(Collectors.toMap(k -> k.getCatId().toString(), v -> {
+                    List<CategoryEntity> categoryEntities = getParentCid(selectList, v.getCatId());
+                    List<Catelog2Vo> catelog2Vos = null;
+                    if (categoryEntities != null) {
+                        catelog2Vos = categoryEntities
+                                .stream()
+                                .map(l2 -> {
+                                    Catelog2Vo catelog2Vo = new Catelog2Vo(v.getCatId().toString(), null, l2.getCatId().toString(), l2.getName());
+                                    // 当前2级分类找三级分类
+                                    List<CategoryEntity> level3Catelog = getParentCid(selectList, l2.getCatId());
+                                    if (level3Catelog != null) {
+                                        // 封装指定格式
+                                        List<Catelog2Vo.Catelog3Vo> collect = level3Catelog.stream().map(l3 -> {
+                                            Catelog2Vo.Catelog3Vo catelog3Vo = new Catelog2Vo.Catelog3Vo(l2.getCatId().toString(), l3.getCatId().toString(), l3.getName());
+                                            return catelog3Vo;
+                                        }).collect(Collectors.toList());
+                                        catelog2Vo.setCatelog3List(collect);
+                                    }
+                                    return catelog2Vo;
+                                })
+                                .collect(Collectors.toList());
+                    }
+                    return catelog2Vos;
+                }));
+        return parent_cid;
+    }
+
+
+
+    public Map<String, List<Catelog2Vo>> getCatalogJson2() {
         /**
          * 1. 空结果缓存， 解决缓存穿透
          * 2. 设置过期时间（加随机值）： 解决缓存雪崩
