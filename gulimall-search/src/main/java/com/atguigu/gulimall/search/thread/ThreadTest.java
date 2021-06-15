@@ -7,6 +7,12 @@ public class ThreadTest {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         System.out.println("main .... start");
         /**
+         * 有三种方法可以结束线程：
+         * 1.设置退出标志，使线程正常退出，也就是当run()方法完成后线程终止
+         * 2.使用interrupt()方法中断线程
+         * 3.使用stop方法强行终止线程（不推荐使用，Thread.stop, Thread.suspend, Thread.resume 和Runtime.runFinalizersOnExit 这些终止线程运行的方法已经被废弃，使用它们是极端不安全的！）
+         */
+        /**
          * 线程的4种创建方式
          * 1)继承Thread
          * Thread01 thread01 = new Thread01();
