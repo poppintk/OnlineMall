@@ -1,11 +1,15 @@
 package com.atguigu.gulimall.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.alibaba.nacos.client.utils.StringUtils;
 import com.atguigu.common.to.es.SkuEsModel;
+import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.search.config.GulimallElasticSearchConfig;
 import com.atguigu.gulimall.search.constant.EsConstant;
+import com.atguigu.gulimall.search.feign.ProductFeignService;
 import com.atguigu.gulimall.search.service.MallSearchService;
+import com.atguigu.gulimall.search.vo.AttrResponseVo;
 import com.atguigu.gulimall.search.vo.SearchParam;
 import com.atguigu.gulimall.search.vo.SearchResult;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +49,11 @@ public class MallSearchServiceImpl implements MallSearchService {
 
     @Autowired
     private RestHighLevelClient client;
+
+    @Autowired
+    ProductFeignService productFeignService;
+
+
 
     //去es中进行检索
     @Override
@@ -165,7 +174,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         //=========以上从聚合信息中获取===========
         //5.分页信息-页码
 
-        result.setPageNum(param.getPageNum());
+        result.setPageNum(param.getPageNum() == null ? 0 : param.getPageNum());
         //5.分页信息-总记录数
         long total = hits.getTotalHits().value;
         result.setTotal(total);
@@ -182,28 +191,26 @@ public class MallSearchServiceImpl implements MallSearchService {
         result.setPageNavs(page);
 
 
-//        //构建面包屑导航功能
-//        List<SearchResult.NavVo> navVos = param.getAttrs().stream().map(item -> {
-//            SearchResult.NavVo navVo = new SearchResult.NavVo();
-//            String[] s = item.split("_");
-//            navVo.setNavValue(s[1]);
-//
-//            R info = productFeignService.info(Long.parseLong(s[0]));
-//            if(info.getCode() == 0){
-//                AttrResponseVo data = info.getData("attr", new TypeReference<AttrResponseVo>() {
-//                });
-//                navVo.setNavName(data.getAttrName());
-//            }else {
-//                navVo.setNavName(s[0]);
-//            }
-//
-//            //2.取消了面包屑后，要跳转到什么地方，将请求地址的URL置空
-//            return navVo;
-//        }).collect(Collectors.toList());
-//
-//        result.setNavs(navVos);
+        //构建面包屑导航功能
+        if (param.getAttrs() != null) {
+            List<SearchResult.NavVo> navVos = param.getAttrs().stream().map(item -> {
+                SearchResult.NavVo navVo = new SearchResult.NavVo();
+                String[] s = item.split("_");
+                navVo.setNavValue(s[1]);
 
+                R info = productFeignService.info(Long.parseLong(s[0]));
+                if(info.getCode() == 0){
+                    AttrResponseVo data = info.getData("attr", new TypeReference<AttrResponseVo>() {});
+                    navVo.setNavName(data.getAttrName());
+                }else {
+                    navVo.setNavName(s[0]);
+                }
 
+                //2.取消了面包屑后，要跳转到什么地方，将请求地址的URL置空
+                return navVo;
+            }).collect(Collectors.toList());
+            result.setNavs(navVos);
+        }
         return result;
     }
 

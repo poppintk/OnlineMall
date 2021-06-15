@@ -29,6 +29,13 @@ public class R extends HashMap<String, Object> {
 		return t;
 	}
 
+	public <T> T getData(String property, TypeReference<T> typeReference) {
+		Object data = get(property); //默认是map的类型
+		String s = JSON.toJSONString(data);
+		T t = JSON.parseObject(s, typeReference);
+		return t;
+	}
+
 	public R setData(Object data) {
 		put("data", data);
 		return this;
@@ -73,4 +80,6 @@ public class R extends HashMap<String, Object> {
 	public Integer getCode() {
 		return (Integer) this.get("code");
 	}
+
+
 }
