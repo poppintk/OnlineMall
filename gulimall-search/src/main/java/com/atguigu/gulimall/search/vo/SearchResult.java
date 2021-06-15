@@ -45,6 +45,12 @@ public class SearchResult {
         private Long brandId;
         private String brandName;
         private String brandImg;
+
+        public BrandVo(Long brandId, String brandName, String brandImg) {
+            this.brandId = brandId;
+            this.brandName = brandName;
+            this.brandImg = brandImg;
+        }
     }
 
     @Data
@@ -52,11 +58,22 @@ public class SearchResult {
         private Long attrId;
         private String attrName;
         private List<String> attrValue;
+
+        public AttrVo(Long attrId, String attrName, List<String> attrValues) {
+            this.attrId = attrId;
+            this.attrName = attrName;
+            this.attrValue = attrValues;
+        }
     }
 
     @Data
     public static class CatalogVo {
         private Long catalogId;
         private String catalogName;
+
+        public CatalogVo(Long catalogId, String catalogName) {
+            this.catalogId = catalogId;
+            this.catalogName = catalogName;
+        }
     }
 }

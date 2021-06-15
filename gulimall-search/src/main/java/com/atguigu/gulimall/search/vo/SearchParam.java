@@ -13,28 +13,49 @@ import java.util.List;
 @Data
 public class SearchParam {
 
-    private String keyword; // 页面传递过来的全文匹配关键字
-    private Long catalog3Id; //三级分类id
-
 
     /**
-     * sort=saleCount_asc/desc
-     * sort=skuPrice_asc/desc
-     * sort=hotScore_asc/desc
+     * 页面传递过来的全文匹配关键字
      */
-    private String sort;// 排序条件
+    private String keyword;
+
     /**
-     * 好多的过滤条件
-     * hasStock(是否有货) skuPrice区间，brandId, catalog3Id, attrs
-     *
-     * hasStock=0/1
-     * skuPrice=1_500/_500/500_
-     * brandId=1
-     * attrs=2_5存:6寸
+     * 品牌id,可以多选
      */
-    private Integer hasStock;// 是否只显示有货
-    private String skuPrice; // 价格区间查询
-    private List<Long> brandId; // 按照品牌进行查询，可以多选
-    private List<String> attrs; // 按照属性进行筛选
-    private Integer pageNum; //页码
+    private List<Long> brandId;
+
+    /**
+     * 三级分类id
+     */
+    private Long catalog3Id;
+
+    /**
+     * 排序条件：sort=price/salecount/hotscore_desc/asc
+     */
+    private String sort;
+
+    /**
+     * 是否显示有货
+     */
+    private Integer hasStock;
+
+    /**
+     * 价格区间查询
+     */
+    private String skuPrice;
+
+    /**
+     * 按照属性进行筛选
+     */
+    private List<String> attrs;
+
+    /**
+     * 页码
+     */
+    private Integer pageNum = 1;
+
+    /**
+     * 原生的所有查询条件
+     */
+    private String _queryString;
 }
