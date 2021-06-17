@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>商品详情页</title>
     <link rel="stylesheet" type="text/css" href="/static/item/scss/shop.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/item/scss/jd.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/item/scss/main.css"/>
     <link rel="stylesheet" href="/static/item/scss/header.css"/>
     <link rel="stylesheet" type="text/css" href="/static/item/bootstrap/css/bootstrap.css"/>
 </head>
@@ -529,8 +529,7 @@
                                 商品将会在[[${#dates.format(new java.util.Date(item.seckillSkuVo.startTime),"yyyy-MM-dd HH:mm:ss")}]]进行秒杀
                             </span>
 
-                            <span
-                                    th:if="${#dates.createNow().getTime() >= item.seckillSkuVo.startTime && #dates.createNow().getTime() <= item.seckillSkuVo.endTime}">
+                            <span th:if="${#dates.createNow().getTime() >= item.seckillSkuVo.startTime && #dates.createNow().getTime() <= item.seckillSkuVo.endTime}">
                                 秒杀价  [[${#numbers.formatDecimal(item.seckillSkuVo.seckillPrice,1,2)}]]
                             </span>
 
@@ -622,42 +621,30 @@
                     </ul>
                 </div>
                 <div class="box-attr-3">
-                    <div class="box-attr clear" th:each="attr : ${item.saleAttr}">
+
+                    <div class="box-attr-2 clear">
                         <dl>
-                            <dt>选择[[${attr.attrName}]]</dt>
-                            <dd th:each="val : ${attr.attrValues}">
-                                <a th:attr=" class=${#lists.contains(#strings.listSplit(val.skuIds,','),item.info.skuId.toString())
-                                   ? 'sku_attr_value checked': 'sku_attr_value'}, skus=${val.skuIds} "
-                                >
-                                    [[${val.attrValue}]]
-                                    <!--											<img src="/static/item/img/59ddfcb1Nc3edb8f1.jpg" /> -->
-                                </a>
+                            <dt>选择版本</dt>
+                            <dd>
+                                <a href="/static/item/#">标准版</a>
+                            </dd>
+                            <dd>
+                                <a href="/static/item/#">套装版</a>
                             </dd>
                         </dl>
                     </div>
-                    <!--							<div class="box-attr-2 clear">-->
-                    <!--								<dl>-->
-                    <!--									<dt>选择版本</dt>-->
-                    <!--									<dd>-->
-                    <!--										<a href="/static/item/#">标准版</a>-->
-                    <!--									</dd>-->
-                    <!--									<dd>-->
-                    <!--										<a href="/static/item/#">套装版</a>-->
-                    <!--									</dd>-->
-                    <!--								</dl>-->
-                    <!--							</div>-->
 
-                    <!--							<div class="box-attr-2 clear">-->
-                    <!--								<dl>-->
-                    <!--									<dt>选择内存</dt>-->
-                    <!--									<dd>-->
-                    <!--										<a href="/static/item/#">64GB</a>-->
-                    <!--									</dd>-->
-                    <!--									<dd>-->
-                    <!--										<a href="/static/item/#">128GB</a>-->
-                    <!--									</dd>-->
-                    <!--								</dl>-->
-                    <!--							</div>-->
+                    <div class="box-attr-2 clear">
+                        <dl>
+                            <dt>选择内存</dt>
+                            <dd>
+                                <a href="/static/item/#">64GB</a>
+                            </dd>
+                            <dd>
+                                <a href="/static/item/#">128GB</a>
+                            </dd>
+                        </dl>
+                    </div>
                 </div>
 
                 <div class="box-btns clear">
@@ -681,7 +668,7 @@
 
                     <div class="box-btns-two"
                          th:if="${item.seckillSkuVo == null }">
-                        <a class="addToCart" href="#" th:attr="skuId=${item.info.skuId}">
+                        <a class="addToCart" href="http://cart.gulimall.com/addToCart" th:attr="skuId=${item.info.skuId}">
                             加入购物车
                         </a>
                     </div>
@@ -855,19 +842,19 @@
         <div class="allquanbushop">
             <ul class="shopjieshao">
                 <li class="jieshoa" style="background: #e4393c;">
-                    <a href="/static/item/##" style="color: white;">商品介绍</a>
+                    <a style="color: white;">商品介绍</a>
                 </li>
                 <li class="baozhuang">
-                    <a href="/static/item/##">规格与包装</a>
+                    <a>规格与包装</a>
                 </li>
                 <li class="baozhang">
-                    <a href="/static/item/##">售后保障</a>
+                    <a>售后保障</a>
                 </li>
                 <li class="pingjia">
-                    <a href="/static/item/##">商品评价(4万+)</a>
+                    <a>商品评价(4万+)</a>
                 </li>
                 <li class="shuoming">
-                    <a href="/static/item/##">预约说明</a>
+                    <a>预约说明</a>
                 </li>
 
             </ul>
@@ -936,7 +923,7 @@
                             <!--										</tr>-->
                             <!--									</table>-->
                             <img class="xiaoguo" th:src="${descp}"
-                                 th:each="descp : ${#strings.listSplit(item.desc.decript,',')}"/>
+                                 th:each="descp : ${#strings.listSplit(item.desp.decript,',')}"/>
                             <!--                            <div class="guiGebox guiGebox1">-->
                             <!--                                <div class="guiGe">-->
                             <!--                                    <h3 th:text="guige.groupName"></h3>-->
@@ -967,7 +954,6 @@
                             <!--                            </div>-->
                         </div>
                     </li>
-                    <li class="baozhuang actives" id="li2">
                     <li class="baozhuang actives" id="li2">
                         <div class="guiGebox">
                             <div class="guiGe" th:each="group : ${item.groupAttrs}">
@@ -1369,7 +1355,6 @@
         $("a[class='sku_attr_value checked']").each(function () {
             skus.push($(this).attr("skus").split(","));
         });
-
         let filterEle = skus[0];
         for (let i = 1; i < skus.length; i++) {
             filterEle = $(filterEle).filter(skus[i])[0];
