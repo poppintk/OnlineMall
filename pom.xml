@@ -19,6 +19,7 @@
         <module>gulimall-common</module>
         <module>gulimall-search</module>
         <module>gulimall-gateway</module>
+        <module>gulimall-auth</module>
         <module>gulimall-third-party</module>
     </modules>
 </project>
