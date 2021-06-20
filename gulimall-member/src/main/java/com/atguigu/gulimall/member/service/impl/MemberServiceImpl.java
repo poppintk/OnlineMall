@@ -9,6 +9,7 @@ import com.atguigu.gulimall.member.entity.MemberLevelEntity;
 import com.atguigu.gulimall.member.exception.PhoneExistException;
 import com.atguigu.gulimall.member.exception.UsernameExistException;
 import com.atguigu.gulimall.member.service.MemberService;
+import com.atguigu.gulimall.member.vo.MemberLoginVo;
 import com.atguigu.gulimall.member.vo.MemberRegisterVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -80,6 +81,28 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         if (count > 0) {
             throw new UsernameExistException();
         }
+    }
+
+    @Override
+    public MemberEntity login(MemberLoginVo vo) {
+        String loginAccount = vo.getLoginAccount();
+        String password = vo.getPassword();
+        // 1 去数据库查询 SELECT * FROM `ums_member` WHERE username=? OR mobile=?
+        MemberDao memberDao = this.baseMapper;
+        MemberEntity entity = memberDao.getMemberByUserName(loginAccount);
+        if (entity == null) {
+            // 登录失败
+            return null;
+        }
+
+        String passwordDB = entity.getPassword();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        // 密码匹配
+        boolean matches = passwordEncoder.matches(password, passwordDB);
+        if (matches) {
+            return entity;
+        }
+        return null;
     }
 
 }

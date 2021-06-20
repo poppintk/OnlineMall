@@ -6,6 +6,7 @@ import com.atguigu.common.exception.BizCodeEnum;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.auth.feign.MemberFeignService;
 import com.atguigu.gulimall.auth.feign.ThirdPartyFeignService;
+import com.atguigu.gulimall.auth.vo.UserLoginVo;
 import com.atguigu.gulimall.auth.vo.UserRegisterVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -108,7 +109,7 @@ public class LoginController {
                 if (r.getCode() != 0) {
                     // 成功
                     Map<String, String> errors = new HashMap<>();
-                    errors.put("msg", r.getData(new TypeReference<String>() {}));
+                    errors.put("msg", r.getData("msg", new TypeReference<String>() {}));
                     redirectAttributes.addFlashAttribute("errors", errors);
                     return "redirect:http://auth.gulimall.com/reg.html";
                 }
@@ -125,5 +126,18 @@ public class LoginController {
             redirectAttributes.addFlashAttribute("errors", errors);
             return "redirect:http://auth.gulimall.com/reg.html";
         }
+    }
+
+    @PostMapping("/login")
+    public String login(UserLoginVo vo, RedirectAttributes redirectAttributes) {
+        //远程登录
+        R login = memberFeignService.login(vo);
+        if (login.getCode() == 0){
+          return "redirect:http://gulimall.com";
+        }
+        Map<String,String> errors = new HashMap<>();
+        errors.put("msg", login.getData("msg", new TypeReference<String>() {}));
+        redirectAttributes.addFlashAttribute("errors",errors);
+        return "redirect:http://auth.gulimall.com/login.html";
     }
 }

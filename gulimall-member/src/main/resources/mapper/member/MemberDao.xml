@@ -17,16 +17,16 @@
         <result property="birth" column="birth"/>
         <result property="city" column="city"/>
         <result property="job" column="job"/>
-        <result property="sign" column="sign"/>
         <result property="sourceType" column="source_type"/>
         <result property="integration" column="integration"/>
         <result property="growth" column="growth"/>
-        <result property="status" column="status"/>
         <result property="createTime" column="create_time"/>
         <result property="socialUid" column="social_uid"/>
-        <result property="accessToken" column="access_token"/>
-        <result property="expiresIn" column="expires_in"/>
     </resultMap>
+    <select id="getMemberByUserName" resultType="com.atguigu.gulimall.member.entity.MemberEntity">
+        SELECT * FROM `ums_member` WHERE username=#{loginAccount} OR mobile=#{loginAccount}
+
+    </select>
 
 
 </mapper>
