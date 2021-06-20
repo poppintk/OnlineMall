@@ -20,6 +20,7 @@ public class SmsComponent {
 
     public void sendSmsCode(String phone, String code) {
         // fake logic
+        System.out.println("fake logic....");
 
     }
 }
