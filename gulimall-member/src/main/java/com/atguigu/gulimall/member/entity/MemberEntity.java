@@ -68,10 +68,10 @@ public class MemberEntity implements Serializable {
 	 * 职业
 	 */
 	private String job;
-//	/**
-//	 * 个性签名
-//	 */
-//	private String sign;
+	/**
+	 * 个性签名
+	 */
+	private String sign;
 	/**
 	 * 用户来源
 	 */
@@ -84,10 +84,10 @@ public class MemberEntity implements Serializable {
 	 * 成长值
 	 */
 	private Integer growth;
-//	/**
-//	 * 启用状态
-//	 */
-//	private Integer status;
+	/**
+	 * 启用状态
+	 */
+	private Integer status;
 	/**
 	 * 注册时间
 	 */
@@ -96,13 +96,13 @@ public class MemberEntity implements Serializable {
 	 * 社交账号ID
 	 */
 	private String socialUid;
-//	/**
-//	 * 社交账号Token
-//	 */
-//	private String accessToken;
-//	/**
-//	 * 社交账号Token过期时间
-//	 */
-//	private String expiresIn;
+	/**
+	 * 社交账号Token
+	 */
+	private String accessToken;
+	/**
+	 * 社交账号Token过期时间
+	 */
+	private String expiresIn;
 
 }

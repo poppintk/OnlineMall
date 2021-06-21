@@ -27,6 +27,9 @@
         SELECT * FROM `ums_member` WHERE username=#{loginAccount} OR mobile=#{loginAccount}
 
     </select>
+    <select id="getMemberByuserUid" resultType="com.atguigu.gulimall.member.entity.MemberEntity">
+        SELECT * FROM `ums_member` WHERE username=#{uid}
+    </select>
 
 
 </mapper>
