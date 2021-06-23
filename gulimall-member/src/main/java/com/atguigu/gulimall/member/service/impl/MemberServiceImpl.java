@@ -150,17 +150,19 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         map.put("alt", "json");
         map.put("access_token", socialUser.getAccess_token());
         HttpResponse response = HttpUtils.doGet("https://www.googleapis.com", "/oauth2/v1/userinfo", "GET", new HashMap<>(), map);
+        if (response.getStatusLine().getStatusCode() == 200) {
+            String json = EntityUtils.toString(response.getEntity());
+            Map<String, String> data = JSON.parseObject(json, new TypeReference<HashMap<String,String>>(){});
+            String email = data.get("email");
+            memberEntity.setEmail(email);
+            memberEntity.setUsername(socialUser.getUid());
+            memberEntity.setSocialUid(uid);
+            memberEntity.setAccessToken(socialUser.getAccess_token());
+            memberEntity.setExpiresIn(String.valueOf(socialUser.getExpires_in()));
 
-        String json = EntityUtils.toString(response.getEntity());
-        Map<String, String> data = JSON.parseObject(json, new TypeReference<HashMap<String,String>>(){});
-        String email = data.get("email");
-        memberEntity.setEmail(email);
-        memberEntity.setUsername(socialUser.getUid());
-        memberEntity.setSocialUid(uid);
-        memberEntity.setAccessToken(socialUser.getAccess_token());
-        memberEntity.setExpiresIn(String.valueOf(socialUser.getExpires_in()));
+            this.baseMapper.insert(memberEntity);
+        }
 
-        this.baseMapper.insert(memberEntity);
 
         return memberEntity;
     }

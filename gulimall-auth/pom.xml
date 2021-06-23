@@ -97,6 +97,11 @@
             <artifactId>google-api-client</artifactId>
             <version>1.30.5</version>
         </dependency>
+<!--        spring session solves distribute session sharing issue-->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
 
     </dependencies>
     <dependencyManagement>
