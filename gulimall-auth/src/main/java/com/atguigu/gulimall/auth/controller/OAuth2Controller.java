@@ -29,6 +29,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.atguigu.common.constant.AuthServerConstant.LOGIN_USER;
+
 /**
  * 处理社交登录请求
  */
@@ -68,7 +70,7 @@ public class OAuth2Controller {
                 // TODO 1 默认法的令牌， session=xxxx， 作用域：当前域名， （解决子域名共享问题）
                 // TODO 2 使用json的序列化方式来序列化对象数据到redis中
 
-                session.setAttribute("loginUser", data);
+                session.setAttribute(LOGIN_USER, data);
 //                // 解决不同域名的sessin问题
 //                new Cookie("JSESSIONID", "dadaa").setDomain("");
 //                servletResponse.addCookie();
