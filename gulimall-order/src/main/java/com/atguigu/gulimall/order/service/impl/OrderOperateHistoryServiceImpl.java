@@ -18,13 +18,12 @@ public class OrderOperateHistoryServiceImpl extends ServiceImpl<OrderOperateHist
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<OrderOperateHistoryEntity> page = this.page(
-//                new Query<OrderOperateHistoryEntity>().getPage(params),
-//                new QueryWrapper<OrderOperateHistoryEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<OrderOperateHistoryEntity> page = this.page(
+                new Query<OrderOperateHistoryEntity>().getPage(params),
+                new QueryWrapper<OrderOperateHistoryEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }

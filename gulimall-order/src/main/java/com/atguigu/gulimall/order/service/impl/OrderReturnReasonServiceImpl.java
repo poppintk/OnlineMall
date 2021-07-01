@@ -18,13 +18,12 @@ public class OrderReturnReasonServiceImpl extends ServiceImpl<OrderReturnReasonD
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<OrderReturnReasonEntity> page = this.page(
-//                new Query<OrderReturnReasonEntity>().getPage(params),
-//                new QueryWrapper<OrderReturnReasonEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<OrderReturnReasonEntity> page = this.page(
+                new Query<OrderReturnReasonEntity>().getPage(params),
+                new QueryWrapper<OrderReturnReasonEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }

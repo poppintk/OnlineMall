@@ -18,13 +18,12 @@ public class OrderReturnApplyServiceImpl extends ServiceImpl<OrderReturnApplyDao
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<OrderReturnApplyEntity> page = this.page(
-//                new Query<OrderReturnApplyEntity>().getPage(params),
-//                new QueryWrapper<OrderReturnApplyEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<OrderReturnApplyEntity> page = this.page(
+                new Query<OrderReturnApplyEntity>().getPage(params),
+                new QueryWrapper<OrderReturnApplyEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }

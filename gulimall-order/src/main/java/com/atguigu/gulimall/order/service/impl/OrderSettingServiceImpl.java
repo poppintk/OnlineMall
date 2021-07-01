@@ -18,13 +18,12 @@ public class OrderSettingServiceImpl extends ServiceImpl<OrderSettingDao, OrderS
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<OrderSettingEntity> page = this.page(
-//                new Query<OrderSettingEntity>().getPage(params),
-//                new QueryWrapper<OrderSettingEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<OrderSettingEntity> page = this.page(
+                new Query<OrderSettingEntity>().getPage(params),
+                new QueryWrapper<OrderSettingEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }

@@ -18,13 +18,12 @@ public class PaymentInfoServiceImpl extends ServiceImpl<PaymentInfoDao, PaymentI
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-//        IPage<PaymentInfoEntity> page = this.page(
-//                new Query<PaymentInfoEntity>().getPage(params),
-//                new QueryWrapper<PaymentInfoEntity>()
-//        );
-//
-//        return new PageUtils(page);
-        return null;
+        IPage<PaymentInfoEntity> page = this.page(
+                new Query<PaymentInfoEntity>().getPage(params),
+                new QueryWrapper<PaymentInfoEntity>()
+        );
+
+        return new PageUtils(page);
     }
 
 }
