@@ -47,7 +47,7 @@
   <!--头部-->
   <div class="header_head">
     <div class="header_head_box">
-      <a href="/static/#" class="img"><img src="/static/index/img/logo.jpg"/></a>
+      <a href="http://gulimall.com" class="img"><img src="/static/index/img/logo.jpg"/></a>
       <b class="header_head_p">
         <a href="/static/#">
           <img src="/static/index/img/img_05.png" style="border-radius: 50%;"/>
@@ -94,7 +94,7 @@
       <ul>
         <li>
           <a href="http://auth.gulimall.com/login.html" th:if="${session.loginUser != null}"> 欢迎：[[${session.loginUser == null ? '' : session.loginUser.username}]] </a>
-          <a href="http://auth.gulimall.com/login.html" th:if="session.loginUser == null">欢迎，请登录</a>
+          <a href="http://auth.gulimall.com/login.html" th:if="${session.loginUser == null}">欢迎，请登录</a>
         </li>
         <li>
           <a href="http://auth.gulimall.com/reg.html" class="li_2" th:if="${session.loginUser == null}">免费注册</a>
