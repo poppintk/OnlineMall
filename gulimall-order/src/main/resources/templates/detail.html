@@ -131,13 +131,16 @@
 						</li>
 					</ul>
 					<ul class="header_ul_right">
-						<li>
-							<a href="http://auth.gulimall.com/login.html">你好，[[${session.loginUser==null?"请登录":session.loginUser.nickname}]]</a>
+						<li style="width: 200px">
+							<a href="http://auth.gulimall.com/login.html" th:if="${session.loginUser != null}"> 欢迎：[[${session.loginUser == null ? '' : session.loginUser.username}]] </a>
+							<a href="http://auth.gulimall.com/login.html" th:if="session.loginUser == null">欢迎，请登录</a>
+						</li>
+						<li th:if="${session.loginUser == null}">
+							<a href="http://auth.gulimall.com/reg.html" class="li_2" >免费注册</a>
 						</li>
 						<li>
-							<a href="http://auth.gulimall.com/reg.html" class="li_2">免费注册</a>
+							<a href="http://order.gulimall.com/list.html" class="aa">我的订单</a> |
 						</li>
-							<a href="/static/order/detail/javascript:;" class="aa">我的订单</a> |</li>
 						<li class="jingdong" style="width:95px;">
 							<a href="/static/order/detail/javascript:;">我的谷粒商城</a><span class="glyphicon glyphicon-menu-down">|</span>
 							<ol class="jingdong_ol">
