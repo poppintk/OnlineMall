@@ -18,11 +18,13 @@ public class GuliFeignConfig {
             public void apply(RequestTemplate requestTemplate) {
                 System.out.println("feign 远程之前先进行RequestInterceptor.apply");
                 ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-                HttpServletRequest request = attributes.getRequest(); //老请求
-                // 同步请求头数据，Cookie
-                String cookie = request.getHeader("Cookie");
-                // 给新请求同步了老请求，调用很多的拦截器
-                requestTemplate.header("Cookie", cookie);
+                if (attributes != null) {
+                    HttpServletRequest request = attributes.getRequest(); //老请求
+                    // 同步请求头数据，Cookie
+                    String cookie = request.getHeader("Cookie");
+                    // 给新请求同步了老请求，调用很多的拦截器
+                    requestTemplate.header("Cookie", cookie);
+                }
             }
         };
     }

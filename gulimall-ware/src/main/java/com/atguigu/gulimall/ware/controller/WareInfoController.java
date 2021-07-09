@@ -4,6 +4,7 @@ import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.ware.entity.WareInfoEntity;
 import com.atguigu.gulimall.ware.service.WareInfoService;
+import com.atguigu.gulimall.ware.vo.FareVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,12 @@ import java.util.Map;
 public class WareInfoController {
     @Autowired
     private WareInfoService wareInfoService;
+
+    @GetMapping("/fare")
+    public R getFare(@RequestParam("addrId") Long addrId) {
+        FareVo fare = wareInfoService.getFare(addrId);
+        return R.ok().setData(fare);
+    }
 
     /**
      * 列表
