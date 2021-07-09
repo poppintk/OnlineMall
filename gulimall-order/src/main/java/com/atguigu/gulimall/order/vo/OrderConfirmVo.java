@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 //订单确认页需要的信息
 public class OrderConfirmVo {
@@ -16,6 +17,9 @@ public class OrderConfirmVo {
     @Setter @Getter
     private List<OrderItemVo> items;
 
+    @Getter @Setter
+    Map<Long,Boolean> stocks;
+
     // receipt info
 
     //coupon info
@@ -25,6 +29,17 @@ public class OrderConfirmVo {
 
     //防重令牌-》 幂等性
     String orderToken;
+
+    // order total count
+    public Integer getCount() {
+        Integer i = 0;
+        if (items != null) {
+            for (OrderItemVo item : items) {
+                i += item.getCount();
+            }
+        }
+        return i;
+    }
 
     // order total
     public BigDecimal getTotal() {
