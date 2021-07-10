@@ -1,5 +1,6 @@
 package com.atguigu.gulimall.ware.service.impl;
 
+import com.atguigu.common.exception.NoStockException;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.Query;
 import com.atguigu.common.utils.R;
@@ -7,12 +8,16 @@ import com.atguigu.gulimall.ware.dao.WareSkuDao;
 import com.atguigu.gulimall.ware.entity.WareSkuEntity;
 import com.atguigu.gulimall.ware.feign.ProductFeignService;
 import com.atguigu.gulimall.ware.service.WareSkuService;
+import com.atguigu.gulimall.ware.vo.OrderItemVo;
 import com.atguigu.gulimall.ware.vo.SkuHasStockVo;
+import com.atguigu.gulimall.ware.vo.WareSkuLockVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -82,6 +87,61 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         }).collect(Collectors.toList());
 
         return collect;
+    }
+
+    @Transactional(rollbackFor = NoStockException.class)
+    @Override
+    public boolean orderLockStock(WareSkuLockVo vo) {
+        //1按照下单的收货地址，找到一个就近仓库，锁定库存
+
+        // 找到每个商品再那个仓库都有库存
+        List<OrderItemVo> locks = vo.getLocks();
+
+        List<SkuWareHasStock> collect = locks.stream().map(item -> {
+            SkuWareHasStock stock = new SkuWareHasStock();
+            Long skuId = item.getSkuId();
+            stock.setSkuId(skuId);
+            stock.setNum(item.getCount());
+            List<Long> wareIds = wareSkuDao.listWareIdHasSkuStock(skuId);
+            stock.setWareId(wareIds);
+            return stock;
+        }).collect(Collectors.toList());
+
+        Boolean allLock = true;
+        // 2 锁定库存
+        for (SkuWareHasStock hasStock : collect) {
+            Boolean skuStocked = false;
+            Long skuId = hasStock.getSkuId();
+            List<Long> wareIds = hasStock.getWareId();
+            if (wareIds == null || wareIds.size() == 0) {
+                //没有任何仓库有这个商品的库存
+                throw new NoStockException(skuId);
+            }
+            for (Long wareId : wareIds) {
+                // 成功就返回1 否则为0
+                Long count = wareSkuDao.lockSkuStock(skuId,wareId, hasStock.getNum());
+                if (count != 0) {
+                    //当前仓库锁失败，重试下一个仓库
+                    skuStocked = true;
+                    break;
+                }
+            }
+
+            if (!skuStocked) {
+                //当前商品所有仓库都没有锁住
+                throw new NoStockException(skuId);
+            }
+        }
+        // 3. 肯定全部都是锁定成功过的
+        return true;
+    }
+
+    @Data
+    class SkuWareHasStock {
+        private Long skuId;
+        private Integer num;
+        private List<Long> wareId;
+
     }
 
 }
