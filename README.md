@@ -1,9 +1,9 @@
 # gulimall
 
-### System Design
+### System Architecture
 
 ![](https://i.loli.net/2021/02/18/zMrSWaAfbqYoF4t.png)
 
-### Binessiness Flow
+### Binessiness Logic
 
 ![](https://i.loli.net/2021/02/18/yBjlqvsCgpVkENc.png)
