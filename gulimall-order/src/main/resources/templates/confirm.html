@@ -744,7 +744,7 @@
     <form action="http://order.gulimall.com/submitOrder" method="post">
         <input id="addrInput" type="hidden" name="addrId"/>
         <input id="payPriceInput" type="hidden" name="payPrice">
-
+        <input type="hidden" name="orderToken" th:value="${confirmOrder.orderToken}"/>
         <button class="tijiao" type="submit">提交订单</button>
     </form>
 </div>

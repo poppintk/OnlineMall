@@ -28,6 +28,7 @@ public class OrderConfirmVo {
 
 
     //防重令牌-》 幂等性
+    @Setter @Getter
     String orderToken;
 
     // order total count
