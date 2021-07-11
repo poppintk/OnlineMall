@@ -1,9 +1,5 @@
 # gulimall
 
-### System Architecture
-![spanning tree](./img/system_architecture.png)
-
-
 ## Project Description
 
 Gulimall is a Ecommerce project, including Shopping System and Content management system. it based on SpringCloud、SpringCloud Alibaba、MyBatis Plus Implementation.
@@ -35,6 +31,10 @@ gulimall
 ├── gulimall-ware --  Stock service
 └── gulimall-member --  Member service
 ```
+
+### System Architecture
+![spanning tree](./img/system_architecture.png)
+
 
 
 ### Backend Stacks
