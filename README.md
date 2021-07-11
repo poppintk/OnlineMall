@@ -1,4 +1,4 @@
-# gulimall
+# Gulimall
 
 ## Project Description
 
