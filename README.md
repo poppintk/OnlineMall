@@ -1,8 +1,7 @@
 # gulimall
 
 ### System Architecture
-![spanning tree](./img/adjacencyMatrix.png)
-![](https://i.loli.net/2021/02/18/zMrSWaAfbqYoF4t.png)
+![spanning tree](./img/system_architecture.png)
 
 
 ## Project Description
