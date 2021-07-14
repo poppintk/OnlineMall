@@ -1,4 +1,4 @@
-# Gulimall
+# Gulimall Shopping System
 
 ## Project Description
 
