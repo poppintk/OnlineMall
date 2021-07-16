@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 
-
 /**
  * 商品属性
  *
@@ -35,9 +34,9 @@ public class AttrController {
 
     @GetMapping("/base/listforspu/{spuId}")
     //@RequiresPermissions("product:attr:list")
-    public R baseAttrList(@PathVariable("spuId") Long spuId){
+    public R baseAttrList(@PathVariable("spuId") Long spuId) {
 
-        List<ProductAttrValueEntity> entities= productAttrValueService.baseAttrlistforspu(spuId);
+        List<ProductAttrValueEntity> entities = productAttrValueService.baseAttrlistforspu(spuId);
         return R.ok().put("data", entities);
     }
 
@@ -46,7 +45,7 @@ public class AttrController {
      */
     @RequestMapping("/list")
     //@RequiresPermissions("product:attr:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = attrService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -57,7 +56,7 @@ public class AttrController {
     //@RequiresPermissions("product:attr:info")
     public R baseLogId(@RequestParam Map<String, Object> params,
                        @PathVariable("catelogId") Long catelogId,
-                       @PathVariable("attrType") String attrType){
+                       @PathVariable("attrType") String attrType) {
         PageUtils page = attrService.queryBaseAttrPage(params, catelogId, attrType);
 
         return R.ok().put("page", page);
@@ -68,8 +67,8 @@ public class AttrController {
      */
     @RequestMapping("/info/{attrId}")
     //@RequiresPermissions("product:attr:info")
-    public R info(@PathVariable("attrId") Long attrId){
-		//AttrEntity attr = attrService.getById(attrId);
+    public R info(@PathVariable("attrId") Long attrId) {
+        //AttrEntity attr = attrService.getById(attrId);
 
         AttrRespVo attrRespVo = attrService.getAttrInfo(attrId);
         return R.ok().put("attr", attrRespVo);
@@ -80,12 +79,11 @@ public class AttrController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:attr:save")
-    public R save(@RequestBody AttrVo attr){
-		attrService.saveAttr(attr);
+    public R save(@RequestBody AttrVo attr) {
+        attrService.saveAttr(attr);
 
         return R.ok();
     }
-
 
 
     /**
@@ -93,8 +91,8 @@ public class AttrController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("product:attr:update")
-    public R update(@RequestBody AttrVo attr){
-		attrService.updateAttr(attr);
+    public R update(@RequestBody AttrVo attr) {
+        attrService.updateAttr(attr);
 
         return R.ok();
     }
@@ -102,7 +100,7 @@ public class AttrController {
 
     @PostMapping("/update/{spuId}")
     //@RequiresPermissions("product:attr:update")
-    public R updateSpuAttr(@PathVariable Long spuId, @RequestBody List<ProductAttrValueEntity> entities){
+    public R updateSpuAttr(@PathVariable Long spuId, @RequestBody List<ProductAttrValueEntity> entities) {
         productAttrValueService.updateSpuAttr(spuId, entities);
 
         return R.ok();
@@ -114,8 +112,8 @@ public class AttrController {
      */
     @RequestMapping("/delete")
     //@RequiresPermissions("product:attr:delete")
-    public R delete(@RequestBody Long[] attrIds){
-		attrService.removeByIds(Arrays.asList(attrIds));
+    public R delete(@RequestBody Long[] attrIds) {
+        attrService.removeByIds(Arrays.asList(attrIds));
 
         return R.ok();
     }

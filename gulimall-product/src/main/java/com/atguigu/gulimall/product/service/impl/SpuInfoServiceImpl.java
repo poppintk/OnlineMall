@@ -83,6 +83,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     /**
      * 事务 // TODO 高级部分完善
+     *
      * @param vo
      */
     @Transactional
@@ -185,7 +186,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 BeanUtils.copyProperties(item, skuReductionTo);
                 skuReductionTo.setSkuId(skuId);
                 if (skuReductionTo.getFullCount() > 0 || skuReductionTo.getFullPrice().compareTo(new BigDecimal("0")) == 1) {
-                    R r1 =  couponFeignService.saveSkuReduction(skuReductionTo);
+                    R r1 = couponFeignService.saveSkuReduction(skuReductionTo);
                     if (r1.getCode() != 0) {
                         log.error("远程保存sku 优惠信息失败");
                     }
@@ -193,9 +194,6 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
             });
         }
-
-
-
 
 
     }
@@ -266,7 +264,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         Map<Long, Boolean> stockMap = null;
         try {
             R r = wareFeignService.getSkusHasStock(skuIdList);
-            TypeReference<List<SkuHasStockTo>> typeReference = new TypeReference<List<SkuHasStockTo>>() {};
+            TypeReference<List<SkuHasStockTo>> typeReference = new TypeReference<List<SkuHasStockTo>>() {
+            };
             stockMap = r.getData(typeReference).stream().collect(Collectors.toMap(SkuHasStockTo::getSkuId, item -> item.getHasStock()));
         } catch (Exception e) {
             log.error("库存服务查询异常：{}", e);

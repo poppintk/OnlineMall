@@ -460,7 +460,8 @@
 
                     <div class="box-lh-one">
                         <ul>
-                            <li th:each="img : ${item.images}" th:if="${!#strings.isEmpty(img.imgUrl)}"><img th:src="${img.imgUrl}"/></li>
+                            <li th:each="img : ${item.images}" th:if="${!#strings.isEmpty(img.imgUrl)}"><img
+                                    th:src="${img.imgUrl}"/></li>
                         </ul>
                     </div>
                     <div id="left">
@@ -657,7 +658,8 @@
 
                     <div class="box-btns-two"
                          th:if="${item.seckillSkuVo == null }">
-                        <a class="addToCart" href="http://cart.gulimall.com/addToCart" th:attr="skuId=${item.info.skuId}">
+                        <a class="addToCart" href="http://cart.gulimall.com/addToCart"
+                           th:attr="skuId=${item.info.skuId}">
                             加入购物车
                         </a>
                     </div>

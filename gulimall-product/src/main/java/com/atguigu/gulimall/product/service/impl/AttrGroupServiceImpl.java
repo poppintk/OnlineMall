@@ -74,6 +74,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     /**
      * 根据分来id查出所有的分组以及这些组里面的属性
+     *
      * @param catelogId
      * @return
      */

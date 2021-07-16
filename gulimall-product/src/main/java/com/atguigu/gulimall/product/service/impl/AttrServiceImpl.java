@@ -173,6 +173,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
     /**
      * 根据分组id 查找关联的所有属性
+     *
      * @param attrgroupId
      * @return
      */
@@ -204,6 +205,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
     /**
      * 获取当前分组没有关联的所有属性
+     *
      * @param params
      * @param attrgroupId
      * @return

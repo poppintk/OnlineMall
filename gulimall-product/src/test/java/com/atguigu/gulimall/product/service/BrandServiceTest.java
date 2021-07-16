@@ -10,8 +10,6 @@ import java.io.FileNotFoundException;
 public class BrandServiceTest extends TestCase {
 
 
-
-
     @Test
     public void testUpload() throws FileNotFoundException {
 

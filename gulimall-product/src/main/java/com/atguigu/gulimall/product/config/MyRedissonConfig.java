@@ -12,6 +12,7 @@ import java.io.IOException;
 public class MyRedissonConfig {
     /**
      * 所有对Redisson 的使用都是通过RedissonClient对象
+     *
      * @return
      * @throws IOException
      */

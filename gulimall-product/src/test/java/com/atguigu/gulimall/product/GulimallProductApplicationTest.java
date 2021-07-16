@@ -38,7 +38,7 @@ public class GulimallProductApplicationTest extends TestCase {
     SkuSaleAttrValueService skuSaleAttrValueService;
 
     @Test
-    public void  test() {
+    public void test() {
 
         List<SkuItemSaleAttrVo> saleAttrsBySpuId = skuSaleAttrValueDao.getSaleAttrsBySpuId(8L);
         System.out.println(saleAttrsBySpuId);

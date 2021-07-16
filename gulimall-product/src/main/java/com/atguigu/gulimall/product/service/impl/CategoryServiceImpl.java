@@ -28,6 +28,7 @@ import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
 
@@ -101,26 +102,23 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
 
-
     /**
      * @Cacheable: 当前方法的结果需要缓存 并指定缓存名字
-     *  缓存的value值 默认使用jdk序列化
-     *  默认ttl时间 -1
-     *	key: 里面默认会解析表达式 字符串用 ''
-     *
-     *  自定义:
-     *  	1.指定生成缓存使用的key
-     *  	2.指定缓存数据存活时间	[配置文件中修改]
-     *  	3.将数据保存为json格式
-     *
+     * 缓存的value值 默认使用jdk序列化
+     * 默认ttl时间 -1
+     * key: 里面默认会解析表达式 字符串用 ''
+     * <p>
+     * 自定义:
+     * 1.指定生成缓存使用的key
+     * 2.指定缓存数据存活时间	[配置文件中修改]
+     * 3.将数据保存为json格式
      * @Cacheable: 触发将数据保存到缓存的操作
      * @CacheEvict: 触发将数据从缓存删除的操作 （失效模式）
      * @CachePut: 不影响方法执行更新 （双写模式）
      * @Caching: 组合以上多个操作
      * @CacheConfig: 在类级别共享缓存的相关配置
-     *
-     *  sync = true: --- 开启同步锁
-     *
+     * <p>
+     * sync = true: --- 开启同步锁
      */
     // 代表当前方法的结果需要缓存，如果缓存中有，方法不用调用。如果缓存中没有， 会调用方法，最后将方法的结果返回
     @Cacheable(value = {"category"}, key = "#root.method.name", sync = true)
@@ -141,8 +139,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     /**
      * 级联更新所有关联的数据
-     * @CacheEvict 缓存失效模式
+     *
      * @param category
+     * @CacheEvict 缓存失效模式
      */
 
     @CacheEvict(value = "category", allEntries = true)
@@ -155,19 +154,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     /**
      * TODO 产生对外内存溢出， OutOfDirectMemoryError
-     *  1) springboot 2.0 以后默认使用lettuce作为操作redis的客户端。 它使用netty进行网络通信
-     *  2) lettuce的bug导致netty堆外内存溢出 -xmx300m netty如果没有指定堆外内存，默认使用-Xmx300m
-     *   可以通过-Dio.netty.maxDirectMemory进行设置
-     *
+     * 1) springboot 2.0 以后默认使用lettuce作为操作redis的客户端。 它使用netty进行网络通信
+     * 2) lettuce的bug导致netty堆外内存溢出 -xmx300m netty如果没有指定堆外内存，默认使用-Xmx300m
+     * 可以通过-Dio.netty.maxDirectMemory进行设置
+     * <p>
      * 解决方案: 步能使用 -Dio.netty.maxDirectMemory 支取调大堆外内存
      * 1) 升级Lettuce客户端
      * 2） 接换使用jedis客户端
      * 我们用 2）
-     *  redisTemplate:
-     *      Lettuce, jedis 操作 redis的底层客户端。 spring 挨次封装redisTemplate
+     * redisTemplate:
+     * Lettuce, jedis 操作 redis的底层客户端。 spring 挨次封装redisTemplate
+     *
      * @return
      */
-    @Cacheable(value = "category", key="#root.method.name")
+    @Cacheable(value = "category", key = "#root.method.name")
     @Override
     public Map<String, List<Catelog2Vo>> getCatalogJson() {
         System.out.println("查询数据库。。。。");
@@ -208,7 +208,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
 
-
     public Map<String, List<Catelog2Vo>> getCatalogJson2() {
         /**
          * 1. 空结果缓存， 解决缓存穿透
@@ -226,7 +225,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         }
 
         System.out.println("缓存命中。。。直接返回。。。");
-        Map<String, List<Catelog2Vo>> result = JSON.parseObject(catalogJSON, new TypeReference<Map<String, List<Catelog2Vo>>>(){});
+        Map<String, List<Catelog2Vo>> result = JSON.parseObject(catalogJSON, new TypeReference<Map<String, List<Catelog2Vo>>>() {
+        });
         return result;
     }
 
@@ -235,6 +235,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
      * 缓存数据一致性
      * 1） 双写模式： 高并发会产生 脏数据问题
      * 2） 失效模式
+     *
      * @return
      */
     private Map<String, List<Catelog2Vo>> getCatalogJsonWithRedissonLock() {

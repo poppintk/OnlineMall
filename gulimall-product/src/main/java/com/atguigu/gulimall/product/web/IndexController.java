@@ -48,7 +48,7 @@ public class IndexController {
         try {
             System.out.println("加锁成功...." + Thread.currentThread().getId());
             Thread.sleep(30000);
-        } catch (Exception e){
+        } catch (Exception e) {
 
         } finally {
             // 3 解锁 问题：假设解锁代码没有运行，redisson会不会出现死锁？ 答案：不会有死锁问题，因为redisson用了watch dog机制 自动续ttl, 每十秒自动 续一次
@@ -86,6 +86,7 @@ public class IndexController {
      * 写 + 写： 阻塞方式
      * 读 + 写： 写会等待读释放
      * 读 + 读： 没有任何锁
+     *
      * @return
      */
     @GetMapping("/write")
@@ -129,7 +130,6 @@ public class IndexController {
     /**
      * 车库停车
      * 3车位
-     *
      */
     @ResponseBody
     @GetMapping("/park")

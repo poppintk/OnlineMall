@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * 属性分组
- * 
+ *
  * @author ryan
  * @email ryan.youdong@gmail.com
  * @date 2021-05-12 00:48:47

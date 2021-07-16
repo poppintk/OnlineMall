@@ -27,6 +27,7 @@ public interface CategoryService extends IService<CategoryEntity> {
 
     /**
      * 找到 cateLogId的完整路径
+     *
      * @param catelogId
      * @return
      */

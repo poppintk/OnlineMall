@@ -18,6 +18,7 @@ public class ItemController {
 
     /**
      * 展示当前sku的详情
+     *
      * @param skuId
      * @return
      */
