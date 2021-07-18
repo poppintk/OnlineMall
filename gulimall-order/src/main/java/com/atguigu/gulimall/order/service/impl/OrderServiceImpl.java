@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -135,11 +136,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         return confirmVo;
     }
 
+    @GlobalTransactional
     @Transactional
     @Override
     public SubmitOrderResponseVo submitOrder(OrderSubmitVo vo) {
         SubmitOrderResponseVo response = new SubmitOrderResponseVo();
-        // 验令牌，去创建订单，验价格， 锁定库存。。。
+        // 验令牌，去创建订单，验价格，保存订单, (RPC -> ware service)锁定库存
         String luaScript = "if redis.call(\"get\", KEYS[1]) == ARGV[1] then return redis.call(\"del\", KEYS[1]) else return 0 end";
         // 1 验证令牌 [令牌的对比和删除必须保证原子性]
         // 0 令牌失败 - 1 删除成功
@@ -180,11 +182,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                 return itemVo;
             }).collect(Collectors.toList());
             lockVo.setLocks(locks);
-            // 远程锁库存
+            // RPC 远程锁库存
             R r = wmsFeignService.orderLockStock(lockVo);
             if (r.getCode() == 0) {
                 // lock successfully
                 response.setOrder(order.getOrder());
+//                int i = 10/0;
                 return response;
             } else {
                 String msg = (String) r.get("msg");

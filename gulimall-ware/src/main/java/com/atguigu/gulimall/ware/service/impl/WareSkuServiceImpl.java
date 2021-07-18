@@ -89,7 +89,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         return collect;
     }
 
-    @Transactional(rollbackFor = NoStockException.class)
+    @Transactional
     @Override
     public boolean orderLockStock(WareSkuLockVo vo) {
         //1按照下单的收货地址，找到一个就近仓库，锁定库存
