@@ -110,10 +110,16 @@
             <version>2.9.2</version>
         </dependency>
 
-<!--&lt;!&ndash;        Seata&ndash;&gt;-->
+<!--        &lt;!&ndash;        Seata&ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>com.alibaba.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.seata/seata-all &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>io.seata</groupId>-->
+<!--            <artifactId>seata-all</artifactId>-->
+<!--            <version>0.8.0</version>-->
 <!--        </dependency>-->
     </dependencies>
     <dependencyManagement>
