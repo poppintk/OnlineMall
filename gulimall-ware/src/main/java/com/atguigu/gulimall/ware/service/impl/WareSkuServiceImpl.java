@@ -54,7 +54,6 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             skuEntity.setStock(skuNum);
             skuEntity.setStock(0);
             // 远程查询sku的名字, 如果失败，整个事务无需回滚
-            //
             try {
                 R info = productFeignService.info(skuId);
                 if (info.getCode() == 0) {

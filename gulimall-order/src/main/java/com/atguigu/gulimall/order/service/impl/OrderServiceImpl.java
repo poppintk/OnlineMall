@@ -139,7 +139,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     @Override
     public SubmitOrderResponseVo submitOrder(OrderSubmitVo vo) {
         SubmitOrderResponseVo response = new SubmitOrderResponseVo();
-        // 验令牌，去创建订单，验价格，保存订单, (RPC -> ware service)锁定库存
+        // 验令牌，去创建订单，验价格，保存订单(insert DB), (RPC -> ware service)锁定库存
         String luaScript = "if redis.call(\"get\", KEYS[1]) == ARGV[1] then return redis.call(\"del\", KEYS[1]) else return 0 end";
         // 1 验证令牌 [令牌的对比和删除必须保证原子性]
         // 0 令牌失败 - 1 删除成功
@@ -158,7 +158,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             response.setCode(1);
             return response;
         }
-        // 令牌验证成功 => 去创建订单，验价格， 锁定库存。。。
+        // 令牌验证成功 => 去创建订单，验价格，保存订单(insert DB), (RPC -> ware service)锁定库存
         // 1. 创建订单
         OrderCreateTo order = createOrder(vo.getAddrId());
         // 2 验价格
@@ -169,6 +169,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             // 3. 保存订单
             saveOrder(order);
             // 4. 库存锁定 只要有异常回滚订单数据
+            //  为了保证高并发，库存服务自己回滚。可以发消息给库存服务
+            // 库存服务本身也可以使用自动解锁模式， 消息队列
             // 订单号， 所有订单项 (skuId,skuNum, num)
             WareSkuLockVo lockVo = new WareSkuLockVo();
             lockVo.setOrderSn(order.getOrder().getOrderSn());
