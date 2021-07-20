@@ -36,6 +36,10 @@ gulimall
 ![spanning tree](./img/system_architecture.png)
 
 
+### Bussiness Design
+![spanning tree](./img/bussiness_design.png)
+
+
 
 ### Backend Stacks
 
