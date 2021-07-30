@@ -11,7 +11,7 @@ Content Management system includes: System Management, Product Management, Coupo
 ### Shopping System
 
 ### Content Management System
-![Content Management System](./img/content-management.png)
+![Content_Management_System](./img/content-management.png)
 
 ## Project Structure
 
