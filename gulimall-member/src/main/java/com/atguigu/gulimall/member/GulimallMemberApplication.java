@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * 3） 開啓遠程調用功能
  */
 
+@EnableRedisHttpSession
 @EnableFeignClients(basePackages = "com.atguigu.gulimall.member.feign")
 @EnableDiscoveryClient
 @MapperScan("com.atguigu.gulimall.member.dao")

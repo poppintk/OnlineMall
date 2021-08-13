@@ -31,7 +31,7 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
 server:
-  port: 10000
+  port: 13000
 logging:
   level:
     com.atguigu.gulimall: error
