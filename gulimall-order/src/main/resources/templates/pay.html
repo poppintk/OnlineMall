@@ -32,64 +32,26 @@
       </div>
       <div class="Jd_Con">
         <p class="JdCon_title"><img src="/static/order/pay/img\title.png" alt=""></p>
-        <div class="Jd_Fenqi">
-          <ul>
-            <li><img src="/static/order/pay/img\BAITIAO_2.0.png" alt="">打白条</li>
-            <li>
-              <span>可用额度 7275.38元</span>
-              <span>白条还款日 2018-01-27</span>
-              <span><font>优惠</font>随机立减(最高10元)</span>
-            </li>
-            <li>支付<font>28.90</font>元</li>
-          </ul>
-          <ol>
-            <li>
-              <p>不分期</p>
-              <p>0服务费</p>
-            </li>
-            <li>
-              <p>3期</p>
-              <p>9.48元/期</p>
-            </li>
-            <li>
-              <p>6期</p>
-              <p>4.94元/期</p>
-            </li>
-            <li>
-              <p>12期</p>
-              <p>2.35元/期</p>
-            </li>
-            <li>
-              <p>24期</p>
-              <p>1.44元/期</p>
-            </li>
-          </ol>
-        </div>
         <div class="Jd_main">
           <ul>
             <li>
-              <span>
-                <img src="/static/order/pay/img\XJKCONSUME.png" alt="">谷粒学院小金库
-              </span>
-              <span>未开通小金库</span>
-            </li>
-            <li>
-              <span>
-                <img src="/static/order/pay/img\CMB.png" alt="">招商银行
-              </span>
-              <span>信用卡(4337)</span>
-              <span><font>优惠</font>单单减最高99元</span>
-            </li>
-            <li>
-              <button>更多付款方式</button>
-              <button>添加新卡/网银支付</button>
-            </li>
-            <li>
-              <p>请输入6位数字支付密码</p>
-              <input type="password"><span>忘记支付密码？</span>
-            </li>
-            <li>
-              <button>立即支付</button>
+              <form action='/charge' method='POST' id='checkout-form'>
+                <input type='hidden' th:value='${amount}' name='amount' />
+                <!-- NOTE: data-key/data-amount/data-currency will be rendered by Thymeleaf -->
+                <script
+                        src='https://checkout.stripe.com/checkout.js'
+                        class='stripe-button'
+                        th:attr='data-key=${stripePublicKey},
+                        data-amount=${amount},
+                        data-currency=${currency}'
+                        data-name='GULIMALL'
+                        data-description='Checkout'
+                        data-image
+                                ='https://www.baeldung.com/wp-content/themes/baeldung/favicon/android-chrome-192x192.png'
+                        data-locale='auto'
+                        data-zip-code='false'>
+                </script>
+              </form>
             </li>
           </ul>
         </div>

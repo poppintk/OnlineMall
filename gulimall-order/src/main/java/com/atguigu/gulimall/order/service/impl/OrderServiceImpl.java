@@ -187,7 +187,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             if (r.getCode() == 0) {
                 // lock successfully
                 response.setOrder(order.getOrder());
-                int i = 10/0;
                 return response;
             } else {
                 String msg = (String) r.get("msg");

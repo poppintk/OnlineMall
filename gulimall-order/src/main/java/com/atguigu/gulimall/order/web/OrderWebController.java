@@ -1,21 +1,27 @@
 package com.atguigu.gulimall.order.web;
 
+import com.atguigu.gulimall.order.enume.ChargeRequest;
 import com.atguigu.gulimall.order.service.OrderService;
 import com.atguigu.gulimall.order.vo.OrderConfirmVo;
 import com.atguigu.gulimall.order.vo.OrderSubmitVo;
 import com.atguigu.gulimall.order.vo.SubmitOrderResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+@RefreshScope
 @Controller
 public class OrderWebController {
     @Autowired
     OrderService orderService;
 
+    @Value("${STRIPE_PUBLIC_KEY}")
+    private String stripePublicKey;
 
 
     @GetMapping("/toTrade")
@@ -33,6 +39,9 @@ public class OrderWebController {
         if (responseVo.getCode() == 0) {
             // 下单成功来到支付选择页
             model.addAttribute("order", responseVo.getOrder());
+            model.addAttribute("stripePublicKey", stripePublicKey);
+            model.addAttribute("amount", responseVo.getOrder().getPayAmount().longValue() * 100); // in cents
+            model.addAttribute("currency", ChargeRequest.Currency.USD);
             return "pay";
         } else {
             // 下单失败回到订单确认页 重新确认订单信息
