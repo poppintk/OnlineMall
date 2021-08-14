@@ -210,16 +210,16 @@
             <i class="table_i5 isShow"></i>
           </td>
         </tr>
-        <tr class="tr" th:each="orderItem,itemStat:${order.orderItemEntityList}">
+        <tr class="tr" th:each="item, itemStat:${order.itemEntities}">
           <td colspan="3" style="border-right: 1px solid #ccc">
-            <img style="height: 60px; width: 60px;" th:src="${orderItem.skuPic}" alt="" class="img">
+            <img style="height: 60px; width: 60px;" th:src="${item.skuPic}" alt="" class="img">
             <div>
               <p style="width: 242px; height: auto;overflow: auto">
-                [[${orderItem.skuName}]]
+                [[${item.skuName}]]
               </p>
               <div><i class="table_i4"></i>找搭配</div>
             </div>
-            <div style="margin-left:15px;">x[[${orderItem.skuQuantity}]]</div>
+            <div style="margin-left:15px;">x[[${item.skuQuantity}]]</div>
             <div style="clear:both"></div>
           </td>
           <td th:if="${itemStat.index==0}" th:rowspan="${itemStat.size}">[[${order.receiverName}]]<i><i class="table_i1"></i></i></td>
