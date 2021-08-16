@@ -1,0 +1,36 @@
+
+Product  
+  - has Brands(one<brand> to many)
+  - has Category(one<catetory> to many)
+  - has Attribute(many to many)
+  - has images(one<product> to many)
+  - SKU VS SPU
+    SKU: Gold 16GB iphone 11
+    SPU: Iphone11
+    SKU - has weight (one to one)
+    SPU - has comment(one<SPU> to many)
+  ...
+  
+Stock
+  - stock_id
+  - sku_id
+  - ware_id(contains warehouse information)
+  - stock
+  - stock_locked
+  ...
+  
+  
+User
+  - has name
+  - has password
+  - has gender
+  - has birth
+  ....
+
+Order
+  - status(has order status: init, pay succeed/pay failed, shipped, cancelled etc)
+  - orderItem(contains many order items)
+  - payment(contains payment inforamtion)
+  - return info
+  - refund info
+  ...
