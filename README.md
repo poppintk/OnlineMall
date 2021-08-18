@@ -10,8 +10,7 @@ Content Management system includes: System Management, Product Management, Coupo
 
 ### Shopping System
 
-### Content Management System
-![Content_Management_System](./img/content_management.PNG)
+
 
 ## Project Structure
 
@@ -90,3 +89,6 @@ gulimall
 |    Kibana     | 7.6.2    |               https://www.elastic.co/cn/kibana                             |
 |   RabbitMQ    | 3.8.5    |            http://www.rabbitmq.com/download.html                           |
 |     Nginx     | 1.1.6    |              http://nginx.org/en/download.html                             |
+
+### Content Management System
+![Content_Management_System](./img/content_management.PNG)
