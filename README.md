@@ -90,5 +90,3 @@ gulimall
 |   RabbitMQ    | 3.8.5    |            http://www.rabbitmq.com/download.html                           |
 |     Nginx     | 1.1.6    |              http://nginx.org/en/download.html                             |
 
-### Content Management System
-![Content_Management_System](./img/content_management.PNG)
