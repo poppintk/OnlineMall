@@ -2,7 +2,8 @@
 
 ## Project Description
 
-It is a Online Shopping System and Content Management System. Which bases on Microservice design by using SpringCloud and SpringCloud Alibaba and leverage middelware like Redis, RabbitMQ and ElasticSearch. The Shopping System includes: User Login, User Register, Product Search, Product description, Shopping Cart, Order and Seckill module. Content Management system includes: System Management, Product Management, Coupon Management, Stock Management, Order Managment, User Management and Content Management.
+OnlineMall is a Online Shopping System which base on Microservice design by using SpringCloud, SpringCloud Alibaba and leverage middelwares like Redis, RabbitMQ and ElasticSearch. The Shopping System includes: User Login, User Register, Product Search, Product description, Shopping Cart, Order and Seckill module. 
+It also contains Content Management system which support feature like System Management, Product Management, Coupon Management, Stock Management, Order Managment, User Management and Content Management.
 
 ## Project Demo
 
