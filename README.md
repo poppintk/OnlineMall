@@ -2,9 +2,7 @@
 
 ## Project Description
 
-Gulimall is a Ecommerce project, including Shopping System and Content management system. it based on SpringCloud、SpringCloud Alibaba、MyBatis Plus Implementation.
-Shopping system includes: User Login, User Register, Product Search, Product description, Shopping Cart, Order and Seckill module.
-Content Management system includes: System Management, Product Management, Coupon Management, Stock Management, Order Managment, User Management and Content Management.
+It is a online Shopping System and Content Management System. Which bases on Microservice design by using SpringCloud and SpringCloud Alibaba and leverage middelware like Redis, RabbitMQ and ElasticSearch. The Shopping System includes: User Login, User Register, Product Search, Product description, Shopping Cart, Order and Seckill module. Content Management system includes: System Management, Product Management, Coupon Management, Stock Management, Order Managment, User Management and Content Management.
 
 ## Project Demo
 
