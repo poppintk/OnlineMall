@@ -6,8 +6,6 @@ spring:
     alicloud:
       oss:
         endpoint:  oss-us-east-1.aliyuncs.com
-      secret-key: 7AHMdejiZ5MrAVxKESpICU3RJ3uxxQ
-      access-key: LTAI5tAvFpxC7YxWbcqwKuuD
       bucket: gulimall-youdong
   application:
     name: gulimall-third-party
